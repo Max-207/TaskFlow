@@ -1,0 +1,33 @@
+﻿@rendermode InteractiveServer
+@inject IJSRuntime JS
+@page "/start"
+<script>
+	function getValueByInputId(id) {
+		return document.getElementById(id).value;
+	}
+</script>
+
+@{
+	foreach (Ticket ticket in _tickets)
+	{
+			<div>
+				<input value=@ticket.title id="title_@ticket.id" @onchange='() => ChangeData(ticket.id, "title")'/>
+				<input value=@ticket.description id="description_@ticket.id" @onchange='() => ChangeData(ticket.id, "description")' />
+				<input value=@ticket.status id="status_@ticket.id" @onchange='() => ChangeData(ticket.id, "status")' />
+				<input value=@ticket.priority id="priority_@ticket.id" @onchange='() => ChangeData(ticket.id, "priority")' />
+			</div>
+			<button @onclick="() => DeleteTicket(ticket.id)">Delete</button>
+	}
+
+	<div>
+		<label for="newTicketTitle">Title</label>
+		<input id="newTicketTitle" />
+		<label for="newTicketDescription">Description</label>
+		<input id="newTicketDescription" />
+		<label for="newTicketStatus">Status</label>
+		<input id="newTicketStatus" />
+		<label for="newTicketPriority">Priority</label>
+		<input id="newTicketPriority" />
+		<button @onclick="AddTicket">Create</button>
+	</div>
+}
